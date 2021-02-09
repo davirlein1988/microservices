@@ -7,7 +7,7 @@ import { app } from "../app";
 declare global {
   namespace NodeJS {
     interface Global {
-      getCookie(): string[]
+      getCookie(id?: string): string[]
     }
   }
 }
@@ -39,10 +39,10 @@ afterAll(async ()=> {
   await mongoose.connection.close();
 });
 
-global.getCookie =  () => {
+global.getCookie =  (id?: string) => {
   // build payload for JWT
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com"
   }
   // create JWT
